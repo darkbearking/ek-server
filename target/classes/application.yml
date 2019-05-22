@@ -1,0 +1,22 @@
+server:
+  port: 8761
+spring: 
+  application:
+    name: ek-server
+eureka:
+  server:
+    #eviction-interval-timer-in-ms和enable-self-preservation一般是和服務提供者協同配置。
+    #搭配服務提供者的lease-expiration-duration-in-seconds以及lease-renewal-interval-in-seconds屬性
+    #週期性清理已掛掉的服務提供者，清理依據在服務提供者那一端配置提供（這點奇怪哈）。週期可如下配置，單位毫秒
+    #eviction-interval-timer-in-ms: 5000
+    #自我保護機制，保護的是那些已经挂掉的服務提供者，false為關閉。當某個服務提供者已掛，服務器不會把它繼續保留在服務列表中了。
+    enable-self-preservation: false
+  client: 
+    #serviceUrl: defaultZone: http://localhost:8761/eureka  這裡是設置與eureka server交互的地址。查詢和註冊服務都依賴它，單機環境注釋掉
+    #以下兩個屬性，在單機時註冊為false，分佈式時註冊為true。默認為true
+    #表示當前客戶端能否從eureka服務器獲取註冊信息（雖然當前工程本身就是eureka的服務器，但同時它也作為客戶端存在）
+    fetch-registry: false
+    #是否將自己註冊到eureka server。默認為true
+    register-with-eureka: false
+    
+    
